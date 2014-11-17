@@ -15,6 +15,7 @@
 		96ED54831A1A64250004F2B6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96ED54811A1A64250004F2B6 /* LaunchScreen.xib */; };
 		96ED548F1A1A64250004F2B6 /* scoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED548E1A1A64250004F2B6 /* scoreTests.m */; };
 		96ED549A1A1A6D470004F2B6 /* BowlingFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54991A1A6D470004F2B6 /* BowlingFrame.m */; };
+		96ED54CF1A1A85930004F2B6 /* BowlingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54CE1A1A85930004F2B6 /* BowlingGame.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,8 @@
 		96ED548E1A1A64250004F2B6 /* scoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = scoreTests.m; sourceTree = "<group>"; };
 		96ED54981A1A6D470004F2B6 /* BowlingFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BowlingFrame.h; sourceTree = "<group>"; };
 		96ED54991A1A6D470004F2B6 /* BowlingFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlingFrame.m; sourceTree = "<group>"; };
+		96ED54CD1A1A85930004F2B6 /* BowlingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BowlingGame.h; sourceTree = "<group>"; };
+		96ED54CE1A1A85930004F2B6 /* BowlingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlingGame.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +91,8 @@
 				96ED54771A1A64250004F2B6 /* AppDelegate.m */,
 				96ED54981A1A6D470004F2B6 /* BowlingFrame.h */,
 				96ED54991A1A6D470004F2B6 /* BowlingFrame.m */,
+				96ED54CD1A1A85930004F2B6 /* BowlingGame.h */,
+				96ED54CE1A1A85930004F2B6 /* BowlingGame.m */,
 				96ED54791A1A64250004F2B6 /* ViewController.h */,
 				96ED547A1A1A64250004F2B6 /* ViewController.m */,
 				96ED547C1A1A64250004F2B6 /* Main.storyboard */,
@@ -226,6 +231,7 @@
 			files = (
 				96ED547B1A1A64250004F2B6 /* ViewController.m in Sources */,
 				96ED54781A1A64250004F2B6 /* AppDelegate.m in Sources */,
+				96ED54CF1A1A85930004F2B6 /* BowlingGame.m in Sources */,
 				96ED549A1A1A6D470004F2B6 /* BowlingFrame.m in Sources */,
 				96ED54751A1A64250004F2B6 /* main.m in Sources */,
 			);

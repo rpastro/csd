@@ -7,20 +7,43 @@
 //
 
 #import "ViewController.h"
+#import "BowlingGame.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *pinsDroppedLabel;
 @property (weak, nonatomic) IBOutlet UITextView *scoreBoardText;
+@property (weak, nonatomic) IBOutlet UIButton *rollButton;
+@property (strong, nonatomic) BowlingGame *game;
 
 @end
 
+
 @implementation ViewController
 
+- (BowlingGame *)game {
+    if (!_game) {
+        _game = [[BowlingGame alloc] init];
+    }
+    return _game;
+}
+
 - (IBAction)rollBall {
-    int droppedPins = (int)(arc4random() % 11);
-    self.pinsDroppedLabel.text = [NSString stringWithFormat:@"Pins: %d", droppedPins];
+    if (self.game.finished) {
+        return;
+    }
+    [self.game rollBall];
+    self.pinsDroppedLabel.text = [NSString stringWithFormat:@"Dropped pins: %lu", self.game.lastDroppedPins];
+    self.scoreBoardText.text = [self.game generateScoreboard];
+    if (self.game.finished) {
+        self.rollButton.enabled = NO;
+    }
+}
 
-
+- (IBAction)restartGame {
+    self.game = [[BowlingGame alloc] init];
+    self.pinsDroppedLabel.text = @"Dropped pins:";
+    self.scoreBoardText.text = @"";
+    self.rollButton.enabled = YES;
 }
 
 - (void)viewDidLoad {

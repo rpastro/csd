@@ -10,19 +10,25 @@
 
 @interface BowlingFrame : NSObject
 
+@property (nonatomic, readonly) BOOL started;
 @property (nonatomic, readonly) BOOL finished;
-@property (nonatomic, readonly) int firstBall;
-@property (nonatomic, readonly) int secondBall;
-@property (nonatomic, readonly) NSUInteger remainingPins;
+@property (nonatomic, readonly) BOOL pendingBonus;
 
-@property (nonatomic) NSUInteger firstBonusBall;
-@property (nonatomic) NSUInteger secondBonusBall;
+@property (nonatomic, readonly) NSUInteger remainingPins;
 
 - (BOOL)isStrike;
 - (BOOL)isSpare;
 
 - (void)reset;
+
+- (NSString *)firstBall;
+- (NSString *)secondBall;
+- (NSString *)firstBonusBall;
+- (NSString *)secondBonusBall;
+
 - (void)dropPins:(NSUInteger)droppedPins;
+- (void)addBonusBall:(NSUInteger)droppedPins;
+
 - (NSUInteger)getScore;
 
 @end
