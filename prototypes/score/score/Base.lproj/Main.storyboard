@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,8 +16,59 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nne-tI-TCS">
+                                <rect key="frame" x="16" y="28" width="568" height="45"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.25098040699958801" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="FtF-Wc-gw4"/>
+                                </constraints>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Roll">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rollBall" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ucf-3R-6yk"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pins: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RwT-Pf-of5">
+                                <rect key="frame" x="16" y="81" width="53" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85Q-gC-iqG">
+                                <rect key="frame" x="16" y="110" width="45" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XeX-ag-fqk">
+                                <rect key="frame" x="16" y="139" width="568" height="310"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XeX-ag-fqk" firstAttribute="top" secondItem="85Q-gC-iqG" secondAttribute="bottom" constant="8" symbolic="YES" id="177-E9-T1S"/>
+                            <constraint firstItem="RwT-Pf-of5" firstAttribute="leading" secondItem="85Q-gC-iqG" secondAttribute="leading" id="ApG-qu-nhp"/>
+                            <constraint firstItem="85Q-gC-iqG" firstAttribute="top" secondItem="RwT-Pf-of5" secondAttribute="bottom" constant="8" symbolic="YES" id="Dez-Nc-YtD"/>
+                            <constraint firstItem="85Q-gC-iqG" firstAttribute="leading" secondItem="XeX-ag-fqk" secondAttribute="leading" id="Eb0-x9-3UL"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="XeX-ag-fqk" secondAttribute="bottom" constant="151" id="FOW-fB-pR5"/>
+                            <constraint firstItem="Nne-tI-TCS" firstAttribute="trailing" secondItem="XeX-ag-fqk" secondAttribute="trailing" id="IUP-pT-tzb"/>
+                            <constraint firstItem="XeX-ag-fqk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="KVL-hq-Knk"/>
+                            <constraint firstItem="RwT-Pf-of5" firstAttribute="leading" secondItem="Nne-tI-TCS" secondAttribute="leading" id="Kou-5c-Y0V"/>
+                            <constraint firstItem="RwT-Pf-of5" firstAttribute="top" secondItem="Nne-tI-TCS" secondAttribute="bottom" constant="8" symbolic="YES" id="RrD-W2-p1f"/>
+                            <constraint firstItem="Nne-tI-TCS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="igs-0H-1aE"/>
+                            <constraint firstItem="XeX-ag-fqk" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="ucf-JR-xm3"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="pinsDroppedLabel" destination="RwT-Pf-of5" id="2Oo-mX-JM2"/>
+                        <outlet property="scoreBoardText" destination="XeX-ag-fqk" id="NFO-d0-1P8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

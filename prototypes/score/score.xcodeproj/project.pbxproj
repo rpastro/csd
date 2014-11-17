@@ -14,6 +14,7 @@
 		96ED54801A1A64250004F2B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96ED547F1A1A64250004F2B6 /* Images.xcassets */; };
 		96ED54831A1A64250004F2B6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96ED54811A1A64250004F2B6 /* LaunchScreen.xib */; };
 		96ED548F1A1A64250004F2B6 /* scoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED548E1A1A64250004F2B6 /* scoreTests.m */; };
+		96ED549A1A1A6D470004F2B6 /* BowlingFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54991A1A6D470004F2B6 /* BowlingFrame.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		96ED54881A1A64250004F2B6 /* scoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = scoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		96ED548D1A1A64250004F2B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96ED548E1A1A64250004F2B6 /* scoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = scoreTests.m; sourceTree = "<group>"; };
+		96ED54981A1A6D470004F2B6 /* BowlingFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BowlingFrame.h; sourceTree = "<group>"; };
+		96ED54991A1A6D470004F2B6 /* BowlingFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlingFrame.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +86,8 @@
 			children = (
 				96ED54761A1A64250004F2B6 /* AppDelegate.h */,
 				96ED54771A1A64250004F2B6 /* AppDelegate.m */,
+				96ED54981A1A6D470004F2B6 /* BowlingFrame.h */,
+				96ED54991A1A6D470004F2B6 /* BowlingFrame.m */,
 				96ED54791A1A64250004F2B6 /* ViewController.h */,
 				96ED547A1A1A64250004F2B6 /* ViewController.m */,
 				96ED547C1A1A64250004F2B6 /* Main.storyboard */,
@@ -221,6 +226,7 @@
 			files = (
 				96ED547B1A1A64250004F2B6 /* ViewController.m in Sources */,
 				96ED54781A1A64250004F2B6 /* AppDelegate.m in Sources */,
+				96ED549A1A1A6D470004F2B6 /* BowlingFrame.m in Sources */,
 				96ED54751A1A64250004F2B6 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

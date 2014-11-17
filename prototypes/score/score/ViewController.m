@@ -9,10 +9,19 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *pinsDroppedLabel;
+@property (weak, nonatomic) IBOutlet UITextView *scoreBoardText;
 
 @end
 
 @implementation ViewController
+
+- (IBAction)rollBall {
+    int droppedPins = (int)(arc4random() % 11);
+    self.pinsDroppedLabel.text = [NSString stringWithFormat:@"Pins: %d", droppedPins];
+
+
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
