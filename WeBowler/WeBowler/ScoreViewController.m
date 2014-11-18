@@ -53,6 +53,10 @@
     return cell;
 }
 
+- (IBAction)quit:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 @end
