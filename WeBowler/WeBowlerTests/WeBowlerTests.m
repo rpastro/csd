@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "BowlingFrame.h"
 
 @interface WeBowlerTests : XCTestCase
 
@@ -25,9 +26,27 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+- (void)testFrameInitialization {
+
+    BowlingFrame *frame = [[BowlingFrame alloc] init];
+    XCTAssert([frame getScore] == 0);
+    XCTAssert(!frame.finished);
+    XCTAssert(!frame.isSpare);
+    XCTAssert(!frame.isStrike);
+}
+
+- (void)testFramePlayFirstBallNotStrike {
+
+    BowlingFrame *frame = [[BowlingFrame alloc] init];
+    [frame dropPins:8];
+    XCTAssert(!frame.isStrike);
+}
+
+- (void)testFramePlayFirstBallIsStrike {
+
+    BowlingFrame *frame = [[BowlingFrame alloc] init];
+    [frame dropPins:10];
+    XCTAssert(frame.isStrike);
 }
 
 - (void)testPerformanceExample {
