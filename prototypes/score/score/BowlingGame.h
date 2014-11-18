@@ -12,12 +12,12 @@
 
 @property (nonatomic, readonly) BOOL finished;
 @property (nonatomic, readonly) NSUInteger currentFrame;
-@property (nonatomic, readonly) NSUInteger lastDroppedPins;
+@property (nonatomic, readonly) NSUInteger remainingPins;
 
 @property (nonatomic, strong) NSArray *frames;
 
 
-- (BOOL)rollBall;
+- (BOOL)rollBall:(NSUInteger)droppedPins;
 - (NSUInteger)getScore;
 - (NSString *)generateScoreboard;
 

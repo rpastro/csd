@@ -11,10 +11,9 @@
 
 @interface BowlingGame()
 
-@property (nonatomic) NSUInteger remainingPins;
 @property (nonatomic, readwrite) BOOL finished;
 @property (nonatomic, readwrite) NSUInteger currentFrame;
-@property (nonatomic, readwrite) NSUInteger lastDroppedPins;
+@property (nonatomic, readwrite) NSUInteger remainingPins;
 
 
 @end
@@ -23,8 +22,6 @@
 
 static const NSUInteger NUM_FRAMES = 10;
 static const NSUInteger TOTAL_PINS = 10;
-
-static const int SCORE_ENHANCER = 4; // Increases the chance for a higher score
 
 - (NSArray *)frames {
     if (!_frames) {
@@ -43,24 +40,20 @@ static const int SCORE_ENHANCER = 4; // Increases the chance for a higher score
     if (self) {
         self.finished = NO;
         self.currentFrame = 1;
-        self.lastDroppedPins = 0;
         self.remainingPins = TOTAL_PINS;
     }
     return self;
 }
 
-- (BOOL)rollBall {
+- (BOOL)rollBall:(NSUInteger)droppedPins {
     if (self.finished) {
         // The game is already finished.
         return YES;
     }
 
-    NSUInteger droppedPins = arc4random() % (self.remainingPins + 1);
-    droppedPins += arc4random() % SCORE_ENHANCER;
     if (droppedPins > self.remainingPins) {
         droppedPins = self.remainingPins;
     }
-    self.lastDroppedPins = droppedPins;
 
     // Start by adding the bonus (if any)
     for (BowlingFrame *frame in self.frames) {

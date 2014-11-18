@@ -94,7 +94,6 @@ static const NSUInteger TOTAL_PINS = 10;
         return;
     }
     if (droppedPins > self.remainingPins) {
-        NSLog(@"ERROR - %lu, %lu", droppedPins, self.remainingPins);
         // Cannot drop more pins than available
         droppedPins = self.remainingPins;
     }

@@ -20,6 +20,8 @@
 
 @implementation ViewController
 
+static const int SCORE_ENHANCER = 5; // Increases the chance for a higher score
+
 - (BowlingGame *)game {
     if (!_game) {
         _game = [[BowlingGame alloc] init];
@@ -31,8 +33,15 @@
     if (self.game.finished) {
         return;
     }
-    [self.game rollBall];
-    self.pinsDroppedLabel.text = [NSString stringWithFormat:@"Dropped pins: %lu", self.game.lastDroppedPins];
+
+    NSUInteger droppedPins = arc4random() % (self.game.remainingPins + 1);
+    droppedPins += arc4random() % SCORE_ENHANCER;
+    if (droppedPins > self.game.remainingPins) {
+        droppedPins = self.game.remainingPins;
+    }
+
+    [self.game rollBall:droppedPins];
+    self.pinsDroppedLabel.text = [NSString stringWithFormat:@"Dropped pins: %lu", droppedPins];
     self.scoreBoardText.text = [self.game generateScoreboard];
     if (self.game.finished) {
         self.rollButton.enabled = NO;
