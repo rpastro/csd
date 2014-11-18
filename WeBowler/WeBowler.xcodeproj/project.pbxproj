@@ -14,6 +14,8 @@
 		96ED54B51A1A83D90004F2B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96ED54B41A1A83D90004F2B6 /* Images.xcassets */; };
 		96ED54B81A1A83D90004F2B6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96ED54B61A1A83D90004F2B6 /* LaunchScreen.xib */; };
 		96ED54C41A1A83D90004F2B6 /* WeBowlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54C31A1A83D90004F2B6 /* WeBowlerTests.m */; };
+		96ED550C1A1BC6610004F2B6 /* BowlingFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED55091A1BC6610004F2B6 /* BowlingFrame.m */; };
+		96ED550D1A1BC6610004F2B6 /* BowlingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED550B1A1BC6610004F2B6 /* BowlingGame.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,10 @@
 		96ED54BD1A1A83D90004F2B6 /* WeBowlerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeBowlerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		96ED54C21A1A83D90004F2B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96ED54C31A1A83D90004F2B6 /* WeBowlerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeBowlerTests.m; sourceTree = "<group>"; };
+		96ED55081A1BC6610004F2B6 /* BowlingFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BowlingFrame.h; sourceTree = "<group>"; };
+		96ED55091A1BC6610004F2B6 /* BowlingFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlingFrame.m; sourceTree = "<group>"; };
+		96ED550A1A1BC6610004F2B6 /* BowlingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BowlingGame.h; sourceTree = "<group>"; };
+		96ED550B1A1BC6610004F2B6 /* BowlingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlingGame.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +89,10 @@
 			children = (
 				96ED54AB1A1A83D90004F2B6 /* AppDelegate.h */,
 				96ED54AC1A1A83D90004F2B6 /* AppDelegate.m */,
+				96ED55081A1BC6610004F2B6 /* BowlingFrame.h */,
+				96ED55091A1BC6610004F2B6 /* BowlingFrame.m */,
+				96ED550A1A1BC6610004F2B6 /* BowlingGame.h */,
+				96ED550B1A1BC6610004F2B6 /* BowlingGame.m */,
 				96ED54AE1A1A83D90004F2B6 /* ViewController.h */,
 				96ED54AF1A1A83D90004F2B6 /* ViewController.m */,
 				96ED54B11A1A83D90004F2B6 /* Main.storyboard */,
@@ -221,6 +231,8 @@
 			files = (
 				96ED54B01A1A83D90004F2B6 /* ViewController.m in Sources */,
 				96ED54AD1A1A83D90004F2B6 /* AppDelegate.m in Sources */,
+				96ED550D1A1BC6610004F2B6 /* BowlingGame.m in Sources */,
+				96ED550C1A1BC6610004F2B6 /* BowlingFrame.m in Sources */,
 				96ED54AA1A1A83D90004F2B6 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

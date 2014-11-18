@@ -19,8 +19,30 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FAL-UD-kb8">
                                 <rect key="frame" x="16" y="28" width="568" height="572"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzU-VS-1rN">
+                                        <rect key="frame" x="0.0" y="421" width="568" height="1"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="70h-J7-y8o"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="xzU-VS-1rN" secondAttribute="trailing" id="EC7-hZ-nLH"/>
+                                    <constraint firstAttribute="bottom" secondItem="xzU-VS-1rN" secondAttribute="bottom" constant="150" id="OQI-nL-rK4"/>
+                                    <constraint firstItem="xzU-VS-1rN" firstAttribute="leading" secondItem="FAL-UD-kb8" secondAttribute="leading" id="bDC-lU-suX"/>
+                                    <constraint firstItem="xzU-VS-1rN" firstAttribute="top" secondItem="FAL-UD-kb8" secondAttribute="top" constant="422" id="dRm-eR-HNi"/>
+                                    <constraint firstItem="xzU-VS-1rN" firstAttribute="top" secondItem="FAL-UD-kb8" secondAttribute="top" constant="422" id="dwj-zl-bzq"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="dRm-eR-HNi"/>
+                                        <exclude reference="dwj-zl-bzq"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="hGk-GJ-g5h" appends="YES" id="O4L-jR-ema"/>
                                 </connections>
