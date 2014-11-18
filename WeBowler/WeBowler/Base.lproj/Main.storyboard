@@ -66,16 +66,22 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28T-w7-hzE">
-                                <rect key="frame" x="16" y="562" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28T-w7-hzE">
+                                <rect key="frame" x="20" y="550" width="30" height="30"/>
                                 <state key="normal" title="Quit">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="quit:" destination="L50-K2-0U2" eventType="touchUpInside" id="CXh-56-PaM"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="2ku-uq-6po" secondAttribute="centerY" id="3zp-8t-Lq0"/>
+                            <constraint firstItem="G6A-2k-uAg" firstAttribute="top" secondItem="28T-w7-hzE" secondAttribute="bottom" constant="20" id="ALP-8Q-pXQ"/>
+                            <constraint firstItem="G6A-2k-uAg" firstAttribute="top" secondItem="28T-w7-hzE" secondAttribute="bottom" constant="20" id="aal-0B-FBQ"/>
+                            <constraint firstItem="28T-w7-hzE" firstAttribute="leading" secondItem="v24-a5-dVG" secondAttribute="leading" constant="20" id="eHC-vJ-NA5"/>
                             <constraint firstAttribute="centerX" secondItem="2ku-uq-6po" secondAttribute="centerX" id="vlE-ue-qBU"/>
                         </constraints>
                     </view>
