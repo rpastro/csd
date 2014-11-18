@@ -103,9 +103,11 @@ static const NSUInteger TOTAL_PINS = 10;
 
 - (NSUInteger)getScore {
     NSUInteger score = 0;
+    /*
     for (BowlingFrame *frame in self.frames) {
         score += [frame getScore];
     }
+     */
     return score;
 }
 

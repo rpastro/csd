@@ -42,6 +42,22 @@
     XCTAssert(![frame isStrike ]);
 }
 
+- (void)testFrameScore_BadFrame {
+    BowlingFrame *frame = [[BowlingFrame alloc] init];
+    [frame dropPins:3];
+    [frame dropPins:5];
+    XCTAssertEqual([frame getScore], 8);
+}
+
+- (void)testFrameScore_SpareFrame {
+    BowlingFrame *frame = [[BowlingFrame alloc] init];
+    [frame dropPins:3];
+    [frame dropPins:7];
+    [frame addBonusBall:10];
+    XCTAssertEqual([frame getScore], 20);
+}
+
+
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
     [self measureBlock:^{
