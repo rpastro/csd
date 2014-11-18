@@ -139,9 +139,9 @@ static const NSUInteger TOTAL_PINS = 10;
             score += self.second;
             if (self.firstBonus >= 0) {
                 score += self.firstBonus;
-//                if (self.secondBonus >= 0) {
-//                    score += self.secondBonus;
-//                }
+                if (self.secondBonus >= 0) {
+                    score += self.secondBonus;
+                }
             }
         }
     }

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import "BowlingFrame.h"
+#import "BowlingGame.h"
+
 
 @interface WeBowlerTests : XCTestCase
 
@@ -57,6 +59,56 @@
     XCTAssertEqual([frame getScore], 20);
 }
 
+- (void)testFrameScore_StrikeFrame {
+    BowlingFrame *frame = [[BowlingFrame alloc] init];
+    [frame dropPins:10];
+    [frame addBonusBall:3];
+    [frame addBonusBall:5];
+    XCTAssertEqual([frame getScore], 18);
+}
+
+- (void)testLowGameScore {
+    BowlingGame *game = [[BowlingGame alloc] init];
+    while (!game.finished)
+    {
+        [game rollBall:1];
+    }
+    XCTAssertEqual([game getScore], 20);
+}
+
+- (void)testAllSparesGameScore {
+    BowlingGame *game = [[BowlingGame alloc] init];
+    while (!game.finished)
+    {
+        [game rollBall:5];
+    }
+    XCTAssertEqual([game getScore], 150);
+}
+
+- (void)testPerfectGameScore {
+    BowlingGame *game = [[BowlingGame alloc] init];
+    while (!game.finished)
+    {
+        [game rollBall:10];
+    }
+    XCTAssertEqual([game getScore], 300);
+}
+
+- (void)testRemainingPins {
+    BowlingGame *game = [[BowlingGame alloc] init];
+    for (NSInteger n = 0; n < 9; ++n)
+    {
+        [game rollBall:2];
+        [game rollBall:game.remainingPins];
+    }
+    //is tenth frame now
+    [game rollBall:10];
+    [game rollBall:8];
+
+    XCTAssertEqual(game.remainingPins, 2);
+    [game rollBall:0];
+    XCTAssertEqual([game getScore], 134);
+}
 
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
