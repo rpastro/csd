@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		094EA7E01A1BEC0C00E21D23 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 094EA7DF1A1BEC0C00E21D23 /* MainViewController.m */; };
 		96ED54AA1A1A83D90004F2B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54A91A1A83D90004F2B6 /* main.m */; };
 		96ED54AD1A1A83D90004F2B6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54AC1A1A83D90004F2B6 /* AppDelegate.m */; };
 		96ED54B01A1A83D90004F2B6 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54AF1A1A83D90004F2B6 /* GameViewController.m */; };
@@ -29,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		094EA7DE1A1BEC0C00E21D23 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		094EA7DF1A1BEC0C00E21D23 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		96ED54A41A1A83D90004F2B6 /* WeBowler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeBowler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96ED54A81A1A83D90004F2B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96ED54A91A1A83D90004F2B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -94,6 +97,8 @@
 				96ED550A1A1BC6610004F2B6 /* BowlingGame.h */,
 				96ED550B1A1BC6610004F2B6 /* BowlingGame.m */,
 				96ED54AE1A1A83D90004F2B6 /* GameViewController.h */,
+				094EA7DE1A1BEC0C00E21D23 /* MainViewController.h */,
+				094EA7DF1A1BEC0C00E21D23 /* MainViewController.m */,
 				96ED54AF1A1A83D90004F2B6 /* GameViewController.m */,
 				96ED54B11A1A83D90004F2B6 /* Main.storyboard */,
 				96ED54B41A1A83D90004F2B6 /* Images.xcassets */,
@@ -230,6 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96ED54B01A1A83D90004F2B6 /* GameViewController.m in Sources */,
+				094EA7E01A1BEC0C00E21D23 /* MainViewController.m in Sources */,
 				96ED54AD1A1A83D90004F2B6 /* AppDelegate.m in Sources */,
 				96ED550D1A1BC6610004F2B6 /* BowlingGame.m in Sources */,
 				96ED550C1A1BC6610004F2B6 /* BowlingFrame.m in Sources */,
