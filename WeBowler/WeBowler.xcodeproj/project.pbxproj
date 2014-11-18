@@ -17,6 +17,8 @@
 		96ED54C41A1A83D90004F2B6 /* WeBowlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54C31A1A83D90004F2B6 /* WeBowlerTests.m */; };
 		96ED550C1A1BC6610004F2B6 /* BowlingFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED55091A1BC6610004F2B6 /* BowlingFrame.m */; };
 		96ED550D1A1BC6610004F2B6 /* BowlingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED550B1A1BC6610004F2B6 /* BowlingGame.m */; };
+		9B9EFC3B1A1BE5310085523A /* ScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9EFC3A1A1BE5310085523A /* ScoreViewController.m */; };
+		9B9EFC3E1A1BEBB40085523A /* FrameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9EFC3D1A1BEBB40085523A /* FrameCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,10 @@
 		96ED55091A1BC6610004F2B6 /* BowlingFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlingFrame.m; sourceTree = "<group>"; };
 		96ED550A1A1BC6610004F2B6 /* BowlingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BowlingGame.h; sourceTree = "<group>"; };
 		96ED550B1A1BC6610004F2B6 /* BowlingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlingGame.m; sourceTree = "<group>"; };
+		9B9EFC391A1BE5310085523A /* ScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreViewController.h; sourceTree = "<group>"; };
+		9B9EFC3A1A1BE5310085523A /* ScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreViewController.m; sourceTree = "<group>"; };
+		9B9EFC3C1A1BEBB40085523A /* FrameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameCell.h; sourceTree = "<group>"; };
+		9B9EFC3D1A1BEBB40085523A /* FrameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FrameCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,13 +102,17 @@
 				96ED55091A1BC6610004F2B6 /* BowlingFrame.m */,
 				96ED550A1A1BC6610004F2B6 /* BowlingGame.h */,
 				96ED550B1A1BC6610004F2B6 /* BowlingGame.m */,
+				9B9EFC3C1A1BEBB40085523A /* FrameCell.h */,
+				9B9EFC3D1A1BEBB40085523A /* FrameCell.m */,
 				96ED54AE1A1A83D90004F2B6 /* GameViewController.h */,
 				094EA7DE1A1BEC0C00E21D23 /* MainViewController.h */,
 				094EA7DF1A1BEC0C00E21D23 /* MainViewController.m */,
 				96ED54AF1A1A83D90004F2B6 /* GameViewController.m */,
-				96ED54B11A1A83D90004F2B6 /* Main.storyboard */,
 				96ED54B41A1A83D90004F2B6 /* Images.xcassets */,
 				96ED54B61A1A83D90004F2B6 /* LaunchScreen.xib */,
+				96ED54B11A1A83D90004F2B6 /* Main.storyboard */,
+				9B9EFC391A1BE5310085523A /* ScoreViewController.h */,
+				9B9EFC3A1A1BE5310085523A /* ScoreViewController.m */,
 				96ED54A71A1A83D90004F2B6 /* Supporting Files */,
 			);
 			path = WeBowler;
@@ -234,10 +244,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B9EFC3E1A1BEBB40085523A /* FrameCell.m in Sources */,
 				96ED54B01A1A83D90004F2B6 /* GameViewController.m in Sources */,
 				094EA7E01A1BEC0C00E21D23 /* MainViewController.m in Sources */,
 				96ED54AD1A1A83D90004F2B6 /* AppDelegate.m in Sources */,
 				96ED550D1A1BC6610004F2B6 /* BowlingGame.m in Sources */,
+				9B9EFC3B1A1BE5310085523A /* ScoreViewController.m in Sources */,
 				96ED550C1A1BC6610004F2B6 /* BowlingFrame.m in Sources */,
 				96ED54AA1A1A83D90004F2B6 /* main.m in Sources */,
 			);
