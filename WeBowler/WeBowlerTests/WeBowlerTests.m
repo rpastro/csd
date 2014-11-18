@@ -39,14 +39,7 @@
 
     BowlingFrame *frame = [[BowlingFrame alloc] init];
     [frame dropPins:8];
-    XCTAssert(!frame.isStrike);
-}
-
-- (void)testFramePlayFirstBallIsStrike {
-
-    BowlingFrame *frame = [[BowlingFrame alloc] init];
-    [frame dropPins:10];
-    XCTAssert(frame.isStrike);
+    XCTAssert(![frame isStrike ]);
 }
 
 - (void)testPerformanceExample {
