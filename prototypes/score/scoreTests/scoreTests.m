@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "BowlingFrame.h"
 
 @interface scoreTests : XCTestCase
 
@@ -25,16 +26,25 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+- (void)testNewFrame {
+    BowlingFrame *newFrame = [[BowlingFrame alloc] init];
+    XCTAssertFalse(newFrame.started);
+    XCTAssertFalse(newFrame.finished);
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void)testStartedFrame {
+    BowlingFrame *newFrame = [[BowlingFrame alloc] init];
+    [newFrame dropPins:5];
+    XCTAssertTrue(newFrame.started);
+    XCTAssertFalse(newFrame.finished);
+}
+
+- (void)testFinishedFrame {
+    BowlingFrame *newFrame = [[BowlingFrame alloc] init];
+    [newFrame dropPins:5];
+    [newFrame dropPins:3];
+    XCTAssertTrue(newFrame.started);
+    XCTAssertTrue(newFrame.finished);
 }
 
 @end
