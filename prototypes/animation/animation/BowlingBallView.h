@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BallView : UIView
+@interface BowlingBallView : UIView
 
 @end

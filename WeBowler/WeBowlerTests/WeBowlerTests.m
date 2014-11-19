@@ -38,7 +38,6 @@
 }
 
 - (void)testFramePlayFirstBallNotStrike {
-
     BowlingFrame *frame = [[BowlingFrame alloc] init];
     [frame dropPins:8];
     XCTAssert(![frame isStrike ]);
@@ -104,7 +103,6 @@
     //is tenth frame now
     [game rollBall:10];
     [game rollBall:8];
-
     XCTAssertEqual(game.remainingPins, 2);
     [game rollBall:0];
     XCTAssertEqual([game getScore], 134);

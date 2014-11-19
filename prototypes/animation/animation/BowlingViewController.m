@@ -7,23 +7,28 @@
 //
 
 #import "BowlingViewController.h"
-#import "BallView.h"
+#import "BowlingBallView.h"
+#import "BowlingPinView.h"
 
-@interface BowlingViewController () <UIDynamicAnimatorDelegate>
+@interface BowlingViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *gameView;
 
-@property (strong, nonatomic) BallView* ballView;
+@property (strong, nonatomic) BowlingBallView* idleBallView;
+@property (strong, nonatomic) BowlingBallView* rollingBallView;
+
 @property (strong, nonatomic) NSMutableArray* pinViews;
-@property (strong, nonatomic) UIView *lineView;
+@property (strong, nonatomic) NSMutableArray* pinFrames;
+@property (strong, nonatomic) NSMutableArray* pinStandings;
+
+@property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 
 @property (strong, nonatomic) UIDynamicAnimator *animator;
 @property (strong, nonatomic) UICollisionBehavior *collider;
 @property (strong, nonatomic) UIDynamicItemBehavior *animationOptions;
 
-@property (nonatomic) CGFloat validPanGesture;
 @property (nonatomic) CGFloat lastPositionX;
-@property (nonatomic) BOOL ballInProgress;
+@property (nonatomic) BOOL waitingToCheckScore;
 
 @end
 
@@ -31,16 +36,15 @@
 
 static const int NUM_PINS = 10;
 
-static const NSString *LEFT_BOUNDARY_ID = @"LEFT";
-static const NSString *RIGHT_BOUNDARY_ID = @"RIGHT";
-
-static const CGFloat GESTURE_TO_SPEED_FACTOR = 10;
+static const CGFloat GESTURE_TO_SPEED_FACTOR = 2;
 
 static const CGFloat LINE_OFFSET = 150.0;  // Distance from bottom to the foul line
 static const CGFloat BALL_OFFSET = 100.0;  // Distance from bottom to origin for starting ball position
 static const CGFloat BALL_WIDTH = 50.0;    // The bowling ball's width
-static const CGFloat PIN_WIDTH = 20.0;     // The bowling pin's width
-
+static const CGFloat PIN_WIDTH = 24.0;     // The bowling pin's width
+static const CGFloat PIN_DELTA_X = 28.0;   // The horizontal spacing between pins in the same row
+static const CGFloat PIN_DELTA_Y = 45.0;   // The vertical spacing between pins in adjacent rows
+static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to origin of pins
 
 #pragma mark - Properties
 
@@ -51,38 +55,18 @@ static const CGFloat PIN_WIDTH = 20.0;     // The bowling pin's width
     return _pinViews;
 }
 
-- (UIDynamicAnimator *)animator {
-    if (!_animator) {
-        _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.gameView];
-        _animator.delegate = self;
+- (NSMutableArray *)pinFrames {
+    if (!_pinFrames) {
+        _pinFrames = [[NSMutableArray alloc] init];
     }
-    return _animator;
+    return _pinFrames;
 }
 
-- (UICollisionBehavior *)collider {
-    if (!_collider) {
-        _collider = [[UICollisionBehavior alloc] init];
-        [self.animator addBehavior:_collider];
+- (NSMutableArray *)pinStandings {
+    if (!_pinStandings) {
+        _pinStandings = [[NSMutableArray alloc] init];
     }
-    return _collider;
-}
-
-- (UIDynamicItemBehavior *)animationOptions {
-    if (!_animationOptions) {
-        _animationOptions = [[UIDynamicItemBehavior alloc] init];
-        [self.animator addBehavior:_animationOptions];
-    }
-    return _animationOptions;
-}
-
-
-#pragma mark - UIDynamicAnimatorDelegate
-
-- (void)dynamicAnimatorDidPause:(UIDynamicAnimator *)animator {
-}
-
-- (void)dynamicAnimatorWillResume:(UIDynamicAnimator *)animator {
-
+    return _pinStandings;
 }
 
 #pragma mark - Controller Lifecycle
@@ -90,88 +74,139 @@ static const CGFloat PIN_WIDTH = 20.0;     // The bowling pin's width
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    // Create ball
-    CGRect ballFrame = CGRectMake(0, 0, BALL_WIDTH, BALL_WIDTH);
-    self.ballView = [[BallView alloc] initWithFrame:ballFrame];
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.gameView];
 
-    // Create pins
-    for (int count = 0; count < NUM_PINS; count++) {
-        CGRect ballFrame = CGRectMake(0, 0, PIN_WIDTH, PIN_WIDTH);
-        [self.pinViews addObject:[[BallView alloc] initWithFrame:ballFrame]];
-    }
+    self.collider = [[UICollisionBehavior alloc] init];
+    [self.animator addBehavior:self.collider];
 
-    // Create foul line
+    self.animationOptions = [[UIDynamicItemBehavior alloc] init];
+    self.animationOptions.density = 2.0;
+    // The dynamic item behavior is only added when the user rolls the ball
+
+    __weak BowlingViewController *weakSelf = self;
+    self.animationOptions.action = ^{
+        if (weakSelf.waitingToCheckScore) {
+            return;
+        }
+        if (!CGRectIntersectsRect(weakSelf.gameView.bounds, weakSelf.rollingBallView.frame)) {
+            weakSelf.waitingToCheckScore = YES;
+            [NSTimer scheduledTimerWithTimeInterval:4
+                                             target:weakSelf
+                                           selector:@selector(checkScore)
+                                           userInfo:nil
+                                            repeats:NO];
+        }
+    };
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
-    // Position ball and add it to the view
-    [self positionBowlingBall];
-    [self.gameView addSubview:self.ballView];
-    [self.animationOptions addItem:self.ballView];
-    [self.collider addItem:self.ballView];
-
-    // Position pins and add it to the view
-    [self positionPins];
-    for (BallView *pinView in self.pinViews) {
-        [self.gameView addSubview:pinView];
-        [self.animationOptions addItem:pinView];
-        [self.collider addItem:pinView];
-    }
-
-    // Add collider boundaries
-    [self addColliderBoundaries];
+    [self determinePinsPlacement];
+    [self createElements];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-
-    // Remove ball from view
-    [self.ballView removeFromSuperview];
-    [self.animationOptions removeItem:self.ballView];
-    [self.collider removeItem:self.ballView];
-
-    // Remove pins from view
-    for (BallView *pinView in self.pinViews) {
-        [pinView removeFromSuperview];
-        [self.animationOptions removeItem:pinView];
-        [self.collider removeItem:pinView];
-    }
-
-    // Remove collider boundaries
-    //[self.collider removeAllBoundaries];
+    [self removeElements];
 }
 
 #pragma mark - Internal Functions
 
-- (void)addColliderBoundaries {
-    UIBezierPath *leftPath = [UIBezierPath bezierPath];
-    [leftPath moveToPoint:CGPointMake(0, 0)];
-    [leftPath addLineToPoint:CGPointMake(0, self.gameView.bounds.size.height)];
-    [self.collider addBoundaryWithIdentifier:LEFT_BOUNDARY_ID forPath:leftPath];
-
-    UIBezierPath *rightPath = [UIBezierPath bezierPath];
-    [rightPath moveToPoint:CGPointMake(self.gameView.bounds.size.width, 0)];
-    [rightPath addLineToPoint:CGPointMake(self.gameView.bounds.size.width, self.gameView.bounds.size.height)];
-    [self.collider addBoundaryWithIdentifier:RIGHT_BOUNDARY_ID forPath:rightPath];
+- (void)checkScore {
+    NSLog(@"Check score");
+    self.waitingToCheckScore = NO;
+    [self removeElements];
+    [self createElements];
 }
 
-- (void)positionBowlingBall {
-    CGRect ballFrame;
-    ballFrame.origin = CGPointMake((self.gameView.bounds.size.width - BALL_WIDTH) / 2,
-                               self.gameView.bounds.size.height - BALL_OFFSET);
-    ballFrame.size = CGSizeMake(BALL_WIDTH, BALL_WIDTH);
-    self.ballView = [[BallView alloc] initWithFrame:ballFrame];
-    [self.gameView addSubview:self.ballView];
+- (void)determinePinsPlacement {
+    // The pins are positioned in the following sequence: 7, 8, 9, 10, 4, 5, 6, 2, 3, 1
+    CGFloat middle = self.gameView.bounds.size.width / 2;
+    CGPoint startingPoint = CGPointMake(middle - 2 * PIN_WIDTH - 1.5 * PIN_DELTA_X, PIN_OFFSET);
+    CGRect frame = CGRectMake(startingPoint.x, startingPoint.y, PIN_WIDTH, PIN_WIDTH);
 
-    [self.animationOptions addItem:self.ballView];
-    [self.collider addItem:self.ballView];
+    int pinsInRow = 4;
+    int count = 0;
+
+    for (int num = 0; num < NUM_PINS; num++) {
+        [self.pinFrames addObject:[NSValue valueWithCGRect:frame]];
+        if (++count == pinsInRow) {
+            // Move to the next row
+            startingPoint.x += (PIN_WIDTH + PIN_DELTA_X) / 2;
+            startingPoint.y += PIN_DELTA_Y;
+            frame.origin.x = startingPoint.x;
+            frame.origin.y = startingPoint.y;
+            pinsInRow--;
+            count = 0;
+        } else {
+            // Stay in the same row
+            frame.origin.x += PIN_WIDTH + PIN_DELTA_X;
+        }
+    }
 }
 
-- (void)positionPins {
+- (void)createElements {
+    // Create the idle ball
+    CGRect ballFrame = CGRectMake((self.gameView.bounds.size.width - BALL_WIDTH) / 2,
+                                     self.gameView.bounds.size.height - BALL_OFFSET,
+                                     BALL_WIDTH,
+                                     BALL_WIDTH);
+    self.idleBallView = [[BowlingBallView alloc] initWithFrame:ballFrame];
+    [self.gameView addSubview:self.idleBallView];
+
+    // Add a pan gesture for the ball
+    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    [self.idleBallView addGestureRecognizer:self.panGestureRecognizer];
+
+    // Create the pins
+    [self createPins];
 }
 
+- (void)createPins {
+    for (int num = 0; num < NUM_PINS; num++) {
+        CGRect pinFrame = [self.pinFrames[num] CGRectValue];
+        BowlingPinView *pinView = [[BowlingPinView alloc] initWithFrame:pinFrame];
+        [self.gameView addSubview:pinView];
+        [self.collider addItem:pinView];
+        [self.pinViews addObject:pinView];
+    }
+}
+
+- (void)removeElements {
+    [self removeIdleBall];
+    [self removeRollingBall];
+    [self removePins];
+}
+
+- (void)removeIdleBall {
+    if (self.idleBallView) {
+        [self.idleBallView removeGestureRecognizer:self.panGestureRecognizer];
+        [self.idleBallView removeFromSuperview];
+        self.idleBallView = nil;
+        self.panGestureRecognizer = nil;
+    }
+}
+
+- (void)removeRollingBall {
+    if (self.rollingBallView) {
+        // Remove dynamic item behavior animations
+        [self.animator removeBehavior:self.animationOptions];
+
+        [self.animationOptions removeItem:self.rollingBallView];
+        [self.collider removeItem:self.rollingBallView];
+        [self.rollingBallView removeFromSuperview];
+        self.rollingBallView = nil;
+    }
+}
+
+- (void)removePins {
+    // Remove pins from view
+    for (UIView *pinView in self.pinViews) {
+        [self.collider removeItem:pinView];
+        [pinView removeFromSuperview];
+    }
+    [self.pinViews removeAllObjects];
+}
 
 #pragma mark - Gestures
 
@@ -179,43 +214,55 @@ static const CGFloat PIN_WIDTH = 20.0;     // The bowling pin's width
     CGPoint gesturePoint = [gesture locationInView:self.gameView];
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
-            self.validPanGesture = (gesturePoint.y > self.gameView.bounds.size.height - LINE_OFFSET);
             self.lastPositionX = gesturePoint.x;
             break;
         case UIGestureRecognizerStateChanged:
-            if (self.validPanGesture) {
-                if (gesturePoint.y < self.gameView.bounds.size.height - LINE_OFFSET) {
-                    // User crossed the foul line. Release the ball.
-                    CGPoint velocity = [gesture velocityInView:self.gameView];
-                    velocity.x /= GESTURE_TO_SPEED_FACTOR;
-                    velocity.y /= GESTURE_TO_SPEED_FACTOR;
-                    [self.animationOptions addLinearVelocity:velocity
-                                                     forItem:self.ballView];
-                } else {
-                    // Move the ball horizontally depending on position change
-                    CGFloat delta = gesturePoint.x - self.lastPositionX;
-                    if (delta < 0) {
-                        // Move left
-                        if (self.ballView.frame.origin.x + delta < 0) {
-                            delta = -self.ballView.frame.origin.x;
-                        }
-                    } else {
-                        // Move right
-                        if (self.ballView.frame.origin.x + delta + BALL_WIDTH > self.gameView.bounds.size.width) {
-                            delta = self.gameView.bounds.size.width - self.ballView.bounds.origin.x - BALL_WIDTH;
-                        }
-                    }
-                    CGAffineTransformTranslate(self.ballView.transform, delta, 0);
-                }
+            if (gesturePoint.y < self.gameView.bounds.size.height - LINE_OFFSET) {
+                // User crossed the foul line. Release the ball.
+                CGRect frame = self.idleBallView.frame;
+
+                // Remove idle ball view
+                [self removeIdleBall];
+
+                // Add dynamic item animator
+                [self.animator addBehavior:self.animationOptions];
+
+                // Add rolling ball
+                self.rollingBallView = [[BowlingBallView alloc] initWithFrame:frame];
+                [self.gameView addSubview:self.rollingBallView];
+                [self.animationOptions addItem:self.rollingBallView];
+                [self.collider addItem:self.rollingBallView];
+
+                CGPoint velocity = [gesture velocityInView:self.gameView];
+                velocity.x /= GESTURE_TO_SPEED_FACTOR;
+                velocity.y /= GESTURE_TO_SPEED_FACTOR;
+                [self.animationOptions addLinearVelocity:velocity
+                                                 forItem:self.rollingBallView];
             }
-            break;
-        case UIGestureRecognizerStateEnded:
-            self.validPanGesture = NO;
+            else if (gesturePoint.y > self.idleBallView.frame.origin.y) {
+                // Move the ball horizontally depending on position change
+                CGFloat delta = gesturePoint.x - self.lastPositionX;
+                self.lastPositionX = gesturePoint.x;
+                CGFloat newOriginX = self.idleBallView.frame.origin.x + delta;
+
+                if (newOriginX < 0) {
+                    newOriginX = 0;
+                } else if (newOriginX + BALL_WIDTH > self.gameView.bounds.size.width) {
+                    newOriginX = self.gameView.bounds.size.width - BALL_WIDTH;
+                }
+                self.idleBallView.transform = CGAffineTransformTranslate(self.idleBallView.transform, newOriginX - self.idleBallView.frame.origin.x, 0);
+            }
             break;
         default:
             // do nothing
             break;
     }
+}
+
+- (IBAction)handleTapGesture:(UITapGestureRecognizer *)sender {
+    // Recreate the elements
+    [self removeElements];
+    [self createElements];
 }
 
 @end

@@ -18,11 +18,11 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FAL-UD-kb8">
-                                <rect key="frame" x="16" y="28" width="568" height="572"/>
+                                <rect key="frame" x="16" y="20" width="568" height="580"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzU-VS-1rN">
-                                        <rect key="frame" x="0.0" y="421" width="568" height="1"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <rect key="frame" x="0.0" y="429" width="568" height="1"/>
+                                        <color key="backgroundColor" white="0.93385036496350371" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="70h-J7-y8o"/>
                                         </constraints>
@@ -44,7 +44,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="hGk-GJ-g5h" appends="YES" id="O4L-jR-ema"/>
+                                    <outletCollection property="gestureRecognizers" destination="slR-9Y-JFp" appends="YES" id="USn-yz-0yD"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -52,7 +52,7 @@
                         <constraints>
                             <constraint firstItem="FAL-UD-kb8" firstAttribute="bottom" secondItem="2fi-mo-0CV" secondAttribute="top" id="RgE-Md-Gmd"/>
                             <constraint firstItem="FAL-UD-kb8" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="iZL-Xa-VWZ"/>
-                            <constraint firstItem="FAL-UD-kb8" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" symbolic="YES" id="l36-dd-9VP"/>
+                            <constraint firstItem="FAL-UD-kb8" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="l36-dd-9VP"/>
                             <constraint firstItem="FAL-UD-kb8" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="t6D-SH-LZg"/>
                         </constraints>
                     </view>
@@ -61,11 +61,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="hGk-GJ-g5h">
+                <tapGestureRecognizer id="slR-9Y-JFp">
                     <connections>
-                        <action selector="handlePanGesture:" destination="vXZ-lx-hvc" id="OeW-px-ksN"/>
+                        <action selector="handleTapGesture:" destination="vXZ-lx-hvc" id="deq-4M-RHP"/>
                     </connections>
-                </panGestureRecognizer>
+                </tapGestureRecognizer>
             </objects>
         </scene>
     </scenes>

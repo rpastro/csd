@@ -14,7 +14,8 @@
 		96ED54EA1A1B684C0004F2B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96ED54E91A1B684C0004F2B6 /* Images.xcassets */; };
 		96ED54ED1A1B684C0004F2B6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96ED54EB1A1B684C0004F2B6 /* LaunchScreen.xib */; };
 		96ED54F91A1B684C0004F2B6 /* animationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54F81A1B684C0004F2B6 /* animationTests.m */; };
-		96ED55041A1B75230004F2B6 /* BallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED55031A1B75230004F2B6 /* BallView.m */; };
+		96ED55041A1B75230004F2B6 /* BowlingBallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED55031A1B75230004F2B6 /* BowlingBallView.m */; };
+		96ED55101A1C1B9E0004F2B6 /* BowlingPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED550F1A1C1B9E0004F2B6 /* BowlingPinView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,8 +42,10 @@
 		96ED54F21A1B684C0004F2B6 /* animationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = animationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		96ED54F71A1B684C0004F2B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96ED54F81A1B684C0004F2B6 /* animationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = animationTests.m; sourceTree = "<group>"; };
-		96ED55021A1B75230004F2B6 /* BallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallView.h; sourceTree = "<group>"; };
-		96ED55031A1B75230004F2B6 /* BallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BallView.m; sourceTree = "<group>"; };
+		96ED55021A1B75230004F2B6 /* BowlingBallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BowlingBallView.h; sourceTree = "<group>"; };
+		96ED55031A1B75230004F2B6 /* BowlingBallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlingBallView.m; sourceTree = "<group>"; };
+		96ED550E1A1C1B9E0004F2B6 /* BowlingPinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BowlingPinView.h; sourceTree = "<group>"; };
+		96ED550F1A1C1B9E0004F2B6 /* BowlingPinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlingPinView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +89,10 @@
 			children = (
 				96ED54E01A1B684C0004F2B6 /* AppDelegate.h */,
 				96ED54E11A1B684C0004F2B6 /* AppDelegate.m */,
-				96ED55021A1B75230004F2B6 /* BallView.h */,
-				96ED55031A1B75230004F2B6 /* BallView.m */,
+				96ED55021A1B75230004F2B6 /* BowlingBallView.h */,
+				96ED55031A1B75230004F2B6 /* BowlingBallView.m */,
+				96ED550E1A1C1B9E0004F2B6 /* BowlingPinView.h */,
+				96ED550F1A1C1B9E0004F2B6 /* BowlingPinView.m */,
 				96ED54E31A1B684C0004F2B6 /* BowlingViewController.h */,
 				96ED54E41A1B684C0004F2B6 /* BowlingViewController.m */,
 				96ED54E61A1B684C0004F2B6 /* Main.storyboard */,
@@ -227,7 +232,8 @@
 				96ED54E51A1B684C0004F2B6 /* BowlingViewController.m in Sources */,
 				96ED54E21A1B684C0004F2B6 /* AppDelegate.m in Sources */,
 				96ED54DF1A1B684C0004F2B6 /* main.m in Sources */,
-				96ED55041A1B75230004F2B6 /* BallView.m in Sources */,
+				96ED55041A1B75230004F2B6 /* BowlingBallView.m in Sources */,
+				96ED55101A1C1B9E0004F2B6 /* BowlingPinView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
