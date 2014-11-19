@@ -9,17 +9,25 @@
 #import "BowlingViewController.h"
 #import "BowlingBallView.h"
 #import "BowlingPinView.h"
+#import "BowlingGame.h"
+#import "BowlingFrame.h"
 
 @interface BowlingViewController ()
 
+@property (strong, nonatomic) BowlingGame *game;
 @property (weak, nonatomic) IBOutlet UIView *gameView;
+@property (weak, nonatomic) IBOutlet UILabel *frameNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *frameScoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalScoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *tapToContinueLabel;
 
 @property (strong, nonatomic) BowlingBallView* idleBallView;
 @property (strong, nonatomic) BowlingBallView* rollingBallView;
 
 @property (strong, nonatomic) NSMutableArray* pinViews;
 @property (strong, nonatomic) NSMutableArray* pinFrames;
-@property (strong, nonatomic) NSMutableArray* pinStandings;
+@property (strong, nonatomic) NSMutableArray* droppedPins;
 
 @property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
 
@@ -62,17 +70,24 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
     return _pinFrames;
 }
 
-- (NSMutableArray *)pinStandings {
-    if (!_pinStandings) {
-        _pinStandings = [[NSMutableArray alloc] init];
+- (NSMutableArray *)droppedPins {
+    if (!_droppedPins) {
+        _droppedPins = [[NSMutableArray alloc] init];
     }
-    return _pinStandings;
+    return _droppedPins;
 }
 
 #pragma mark - Controller Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.game = [[BowlingGame alloc] init];
+    [self setBottomLabels];
+
+    self.scoreLabel.text = @"";
+    self.scoreLabel.hidden = YES;
+    self.tapToContinueLabel.hidden = YES;
 
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.gameView];
 
@@ -85,14 +100,14 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
 
     __weak BowlingViewController *weakSelf = self;
     self.animationOptions.action = ^{
-        if (weakSelf.waitingToCheckScore) {
+        if (weakSelf.waitingToCheckScore || !self.rollingBallView) {
             return;
         }
         if (!CGRectIntersectsRect(weakSelf.gameView.bounds, weakSelf.rollingBallView.frame)) {
             weakSelf.waitingToCheckScore = YES;
-            [NSTimer scheduledTimerWithTimeInterval:4
+            [NSTimer scheduledTimerWithTimeInterval:2
                                              target:weakSelf
-                                           selector:@selector(checkScore)
+                                           selector:@selector(computeScore)
                                            userInfo:nil
                                             repeats:NO];
         }
@@ -112,11 +127,46 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
 
 #pragma mark - Internal Functions
 
-- (void)checkScore {
-    NSLog(@"Check score");
+- (void)computeScore {
+    NSLog(@"FUCK");
+    [self removeRollingBall];
     self.waitingToCheckScore = NO;
-    [self removeElements];
-    [self createElements];
+
+    NSUInteger numDroppedPins = 0;
+    for (int idx = 0; idx < NUM_PINS; idx++) {
+        BOOL dropped = YES;
+        if ([self.pinViews[idx] isKindOfClass:[BowlingPinView class]]) {
+            BowlingPinView *pinView = (BowlingPinView *)self.pinViews[idx];
+            CGRect pinFrame = [self.pinFrames[idx] CGRectValue];
+            CGRect actualFrame = pinView.frame;
+            dropped = !CGPointEqualToPoint(actualFrame.origin, pinFrame.origin);
+            if (dropped) {
+                numDroppedPins++;
+            }
+        }
+        [self.droppedPins addObject:[NSNumber numberWithBool:dropped]];
+    }
+
+    self.scoreLabel.text = [NSString stringWithFormat:@"%lu", numDroppedPins];
+
+    BOOL moveToNextFrame = [self.game rollBall:numDroppedPins];
+    if (moveToNextFrame) {
+        [self.droppedPins removeAllObjects];
+        BowlingFrame *lastFrame = [self.game getLastFrame];
+        if ([lastFrame isStrike]) {
+            self.scoreLabel.text = @"X";
+        } else if ([lastFrame isSpare]) {
+            self.scoreLabel.text = @"/";
+        }
+        self.frameScoreLabel.text = [self.game generateLastFrameScore];
+        self.totalScoreLabel.text = [NSString stringWithFormat:@"%lu", [self.game getScore]];
+    } else {
+        [self setBottomLabels];
+    }
+    self.scoreLabel.hidden = NO;
+    self.tapToContinueLabel.hidden = NO;
+
+    NSLog(@"Score: %@", [self.game generateScoreboard]);
 }
 
 - (void)determinePinsPlacement {
@@ -146,6 +196,12 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
 }
 
 - (void)createElements {
+    if (self.game.finished) {
+        // Create a new game
+        self.game = [[BowlingGame alloc] init];
+    }
+    [self setBottomLabels];
+
     // Create the idle ball
     CGRect ballFrame = CGRectMake((self.gameView.bounds.size.width - BALL_WIDTH) / 2,
                                      self.gameView.bounds.size.height - BALL_OFFSET,
@@ -162,9 +218,20 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
     [self createPins];
 }
 
+- (void)setBottomLabels {
+    self.frameNumberLabel.text = [NSString stringWithFormat:@"Frame %lu", self.game.currentFrameNumber];
+    self.frameScoreLabel.text = [self.game generateCurrentFrameScore];
+    self.totalScoreLabel.text = [NSString stringWithFormat:@"%lu", [self.game getScore]];
+}
+
 - (void)createPins {
-    for (int num = 0; num < NUM_PINS; num++) {
-        CGRect pinFrame = [self.pinFrames[num] CGRectValue];
+    for (int idx = 0; idx < NUM_PINS; idx++) {
+        if ([self.droppedPins count] > 0 && [self.droppedPins[idx] boolValue]) {
+            // Do not create a UIView for dropped pins
+            [self.pinViews addObject:[NSNull null]];
+            continue;
+        }
+        CGRect pinFrame = [self.pinFrames[idx] CGRectValue];
         BowlingPinView *pinView = [[BowlingPinView alloc] initWithFrame:pinFrame];
         [self.gameView addSubview:pinView];
         [self.collider addItem:pinView];
@@ -201,9 +268,12 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
 
 - (void)removePins {
     // Remove pins from view
-    for (UIView *pinView in self.pinViews) {
-        [self.collider removeItem:pinView];
-        [pinView removeFromSuperview];
+    for (int idx = 0; idx < NUM_PINS; idx++) {
+        if ([self.pinViews[idx] isKindOfClass:[BowlingPinView class]]) {
+            BowlingPinView *pinView = (BowlingPinView *)self.pinViews[idx];
+            [self.collider removeItem:pinView];
+            [pinView removeFromSuperview];
+        }
     }
     [self.pinViews removeAllObjects];
 }
@@ -260,9 +330,15 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
 }
 
 - (IBAction)handleTapGesture:(UITapGestureRecognizer *)sender {
-    // Recreate the elements
-    [self removeElements];
-    [self createElements];
+    if (!self.tapToContinueLabel.hidden) {
+        self.scoreLabel.text = @"";
+        self.scoreLabel.hidden = YES;
+        self.tapToContinueLabel.hidden = YES;
+
+        // Recreate the elements
+        [self removeElements];
+        [self createElements];
+    }
 }
 
 @end

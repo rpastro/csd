@@ -12,7 +12,7 @@
 @interface BowlingGame()
 
 @property (nonatomic, readwrite) BOOL finished;
-@property (nonatomic, readwrite) NSUInteger currentFrame;
+@property (nonatomic, readwrite) NSUInteger currentFrameNumber;
 @property (nonatomic, readwrite) NSUInteger remainingPins;
 
 
@@ -39,7 +39,7 @@ static const NSUInteger TOTAL_PINS = 10;
     self = [super init];
     if (self) {
         self.finished = NO;
-        self.currentFrame = 1;
+        self.currentFrameNumber = 1;
         self.remainingPins = TOTAL_PINS;
     }
     return self;
@@ -62,9 +62,9 @@ static const NSUInteger TOTAL_PINS = 10;
         }
     }
 
-    BowlingFrame *currFrame = (BowlingFrame *)self.frames[self.currentFrame - 1];
+    BowlingFrame *currFrame = (BowlingFrame *)self.frames[self.currentFrameNumber - 1];
 
-    if (self.currentFrame == NUM_FRAMES) {
+    if (self.currentFrameNumber == NUM_FRAMES) {
         // Need special handling for the last frame
         if (!currFrame.finished) {
             [currFrame dropPins:droppedPins];
@@ -93,7 +93,7 @@ static const NSUInteger TOTAL_PINS = 10;
     // Handling for the other frans
     [currFrame dropPins:droppedPins];
     if (currFrame.finished) {
-        self.currentFrame++;
+        self.currentFrameNumber++;
         self.remainingPins = TOTAL_PINS;
 
         return YES;
@@ -110,6 +110,42 @@ static const NSUInteger TOTAL_PINS = 10;
     }
 
     return score;
+}
+
+- (BowlingFrame *)getCurrentFrame {
+    return (BowlingFrame *)self.frames[self.currentFrameNumber - 1];
+}
+
+- (BowlingFrame *)getLastFrame {
+    NSUInteger lastFrameNumber = (self.currentFrameNumber == 1) ? 1 : self.currentFrameNumber - 1;
+    return (BowlingFrame *)self.frames[lastFrameNumber - 1];
+}
+
+
+- (NSString *)generateFrameScore:(NSUInteger)frameNr {
+    BowlingFrame *frame = (BowlingFrame *)self.frames[frameNr - 1];
+    if (!frame.started) {
+        return @"";
+    }
+    if (frameNr == NUM_FRAMES) {
+        // Tenth Frame
+        if ([frame isStrike]) {
+            return [NSString stringWithFormat:@"| %@ | %@ | %@ |", [frame firstBall], [frame firstBonusBall], [frame secondBonusBall]];
+        } else if ([frame isSpare]) {
+            return [NSString stringWithFormat:@"| %@ | %@ | %@ |", [frame firstBall], [frame secondBall], [frame firstBonusBall]];
+        }
+    }
+    return [NSString stringWithFormat:@"| %@ | %@ |", [frame firstBall], [frame secondBall]];
+}
+
+
+- (NSString *)generateCurrentFrameScore {
+    return [self generateFrameScore:self.currentFrameNumber];
+}
+
+- (NSString *)generateLastFrameScore {
+    NSUInteger lastFrameNumber = (self.currentFrameNumber == 1) ? 1 : self.currentFrameNumber - 1;
+    return [self generateFrameScore:lastFrameNumber];
 }
 
 - (NSString *)generateScoreboard {
