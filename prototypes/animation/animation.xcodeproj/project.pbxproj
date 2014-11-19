@@ -14,10 +14,10 @@
 		96ED54EA1A1B684C0004F2B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96ED54E91A1B684C0004F2B6 /* Images.xcassets */; };
 		96ED54ED1A1B684C0004F2B6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96ED54EB1A1B684C0004F2B6 /* LaunchScreen.xib */; };
 		96ED54F91A1B684C0004F2B6 /* animationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54F81A1B684C0004F2B6 /* animationTests.m */; };
-		96ED55041A1B75230004F2B6 /* BowlingBallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED55031A1B75230004F2B6 /* BowlingBallView.m */; };
-		96ED55101A1C1B9E0004F2B6 /* BowlingPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED550F1A1C1B9E0004F2B6 /* BowlingPinView.m */; };
 		96ED551B1A1C62FD0004F2B6 /* BowlingFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED55181A1C62FD0004F2B6 /* BowlingFrame.m */; };
 		96ED551C1A1C62FD0004F2B6 /* BowlingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED551A1A1C62FD0004F2B6 /* BowlingGame.m */; };
+		96ED552B1A1D0C800004F2B6 /* BowlingBallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED552A1A1D0C800004F2B6 /* BowlingBallView.m */; };
+		96ED552E1A1D0C8E0004F2B6 /* BowlingPinView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED552D1A1D0C8E0004F2B6 /* BowlingPinView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,14 +44,14 @@
 		96ED54F21A1B684C0004F2B6 /* animationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = animationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		96ED54F71A1B684C0004F2B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96ED54F81A1B684C0004F2B6 /* animationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = animationTests.m; sourceTree = "<group>"; };
-		96ED55021A1B75230004F2B6 /* BowlingBallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BowlingBallView.h; sourceTree = "<group>"; };
-		96ED55031A1B75230004F2B6 /* BowlingBallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlingBallView.m; sourceTree = "<group>"; };
-		96ED550E1A1C1B9E0004F2B6 /* BowlingPinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BowlingPinView.h; sourceTree = "<group>"; };
-		96ED550F1A1C1B9E0004F2B6 /* BowlingPinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BowlingPinView.m; sourceTree = "<group>"; };
 		96ED55171A1C62FD0004F2B6 /* BowlingFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BowlingFrame.h; path = ../../../WeBowler/WeBowler/BowlingFrame.h; sourceTree = "<group>"; };
 		96ED55181A1C62FD0004F2B6 /* BowlingFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BowlingFrame.m; path = ../../../WeBowler/WeBowler/BowlingFrame.m; sourceTree = "<group>"; };
 		96ED55191A1C62FD0004F2B6 /* BowlingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BowlingGame.h; path = ../../../WeBowler/WeBowler/BowlingGame.h; sourceTree = "<group>"; };
 		96ED551A1A1C62FD0004F2B6 /* BowlingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BowlingGame.m; path = ../../../WeBowler/WeBowler/BowlingGame.m; sourceTree = "<group>"; };
+		96ED55291A1D0C800004F2B6 /* BowlingBallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BowlingBallView.h; path = ../../../WeBowler/WeBowler/BowlingBallView.h; sourceTree = "<group>"; };
+		96ED552A1A1D0C800004F2B6 /* BowlingBallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BowlingBallView.m; path = ../../../WeBowler/WeBowler/BowlingBallView.m; sourceTree = "<group>"; };
+		96ED552C1A1D0C8E0004F2B6 /* BowlingPinView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BowlingPinView.h; path = ../../../WeBowler/WeBowler/BowlingPinView.h; sourceTree = "<group>"; };
+		96ED552D1A1D0C8E0004F2B6 /* BowlingPinView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BowlingPinView.m; path = ../../../WeBowler/WeBowler/BowlingPinView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,14 +95,14 @@
 			children = (
 				96ED54E01A1B684C0004F2B6 /* AppDelegate.h */,
 				96ED54E11A1B684C0004F2B6 /* AppDelegate.m */,
-				96ED55021A1B75230004F2B6 /* BowlingBallView.h */,
-				96ED55031A1B75230004F2B6 /* BowlingBallView.m */,
+				96ED55291A1D0C800004F2B6 /* BowlingBallView.h */,
+				96ED552A1A1D0C800004F2B6 /* BowlingBallView.m */,
 				96ED55171A1C62FD0004F2B6 /* BowlingFrame.h */,
 				96ED55181A1C62FD0004F2B6 /* BowlingFrame.m */,
 				96ED55191A1C62FD0004F2B6 /* BowlingGame.h */,
 				96ED551A1A1C62FD0004F2B6 /* BowlingGame.m */,
-				96ED550E1A1C1B9E0004F2B6 /* BowlingPinView.h */,
-				96ED550F1A1C1B9E0004F2B6 /* BowlingPinView.m */,
+				96ED552C1A1D0C8E0004F2B6 /* BowlingPinView.h */,
+				96ED552D1A1D0C8E0004F2B6 /* BowlingPinView.m */,
 				96ED54E31A1B684C0004F2B6 /* GameViewController.h */,
 				96ED54E41A1B684C0004F2B6 /* GameViewController.m */,
 				96ED54E61A1B684C0004F2B6 /* Main.storyboard */,
@@ -241,11 +241,11 @@
 			files = (
 				96ED54E51A1B684C0004F2B6 /* GameViewController.m in Sources */,
 				96ED54E21A1B684C0004F2B6 /* AppDelegate.m in Sources */,
+				96ED552E1A1D0C8E0004F2B6 /* BowlingPinView.m in Sources */,
+				96ED552B1A1D0C800004F2B6 /* BowlingBallView.m in Sources */,
 				96ED551C1A1C62FD0004F2B6 /* BowlingGame.m in Sources */,
 				96ED551B1A1C62FD0004F2B6 /* BowlingFrame.m in Sources */,
 				96ED54DF1A1B684C0004F2B6 /* main.m in Sources */,
-				96ED55041A1B75230004F2B6 /* BowlingBallView.m in Sources */,
-				96ED55101A1C1B9E0004F2B6 /* BowlingPinView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
