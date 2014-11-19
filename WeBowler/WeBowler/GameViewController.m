@@ -118,12 +118,14 @@ static const CGFloat MINIMUM_PIN_MOVEMENT = 4.0; // The minimum number of points
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self determinePinsPlacement];
-    [self createElements];
+    if (self.tapToContinueLabel.hidden) {
+        [self removeElements];
+        [self createElements];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [self removeElements];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -284,15 +286,17 @@ static const CGFloat MINIMUM_PIN_MOVEMENT = 4.0; // The minimum number of points
 }
 
 - (void)removePins {
-    // Remove pins from view
-    for (int idx = 0; idx < NUM_PINS; idx++) {
-        if ([self.pinViews[idx] isKindOfClass:[BowlingPinView class]]) {
-            BowlingPinView *pinView = (BowlingPinView *)self.pinViews[idx];
-            [self.collider removeItem:pinView];
-            [pinView removeFromSuperview];
+    if (self.pinViews && [self.pinViews count] > 0) {
+        // Remove pins from view
+        for (int idx = 0; idx < NUM_PINS; idx++) {
+            if ([self.pinViews[idx] isKindOfClass:[BowlingPinView class]]) {
+                BowlingPinView *pinView = (BowlingPinView *)self.pinViews[idx];
+                [self.collider removeItem:pinView];
+                [pinView removeFromSuperview];
+            }
         }
+        [self.pinViews removeAllObjects];
     }
-    [self.pinViews removeAllObjects];
 }
 
 #pragma mark - Gestures
