@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Main View Controller-->
@@ -29,20 +28,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="YUz-EQ-Rae" secondAttribute="centerY" id="1vO-x1-ArY"/>
-                            <constraint firstItem="YUz-EQ-Rae" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="260" id="AM0-9e-DVk"/>
-                            <constraint firstAttribute="centerX" secondItem="YUz-EQ-Rae" secondAttribute="centerX" id="IWt-Om-hHV"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="YUz-EQ-Rae" secondAttribute="trailing" constant="184" id="WJM-uv-Bq4"/>
-                            <constraint firstItem="YUz-EQ-Rae" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="265" id="egE-Br-YXj"/>
-                            <constraint firstItem="YUz-EQ-Rae" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="260" id="fZJ-id-jdo"/>
+                            <constraint firstAttribute="centerY" secondItem="YUz-EQ-Rae" secondAttribute="centerY" id="Efe-WG-iVP"/>
+                            <constraint firstAttribute="centerX" secondItem="YUz-EQ-Rae" secondAttribute="centerX" id="b2F-ea-Q2L"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="AM0-9e-DVk"/>
-                                <exclude reference="WJM-uv-Bq4"/>
-                                <exclude reference="fZJ-id-jdo"/>
-                            </mask>
-                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -75,8 +63,8 @@
                                     <action selector="quit:" destination="L50-K2-0U2" eventType="touchUpInside" id="CXh-56-PaM"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxu-pr-dc1">
-                                <rect key="frame" x="538" y="550" width="40" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxu-pr-dc1">
+                                <rect key="frame" x="540" y="550" width="40" height="30"/>
                                 <state key="normal" title="Score">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
