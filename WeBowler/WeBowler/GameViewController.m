@@ -7,6 +7,7 @@
 //
 
 #import "GameViewController.h"
+#import "ScoreViewController.h"
 #import "BowlingBallView.h"
 #import "BowlingPinView.h"
 #import "BowlingGame.h"
@@ -123,6 +124,15 @@ static const CGFloat MINIMUM_PIN_MOVEMENT = 4.0; // The minimum number of points
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self removeElements];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"pushToScore"]) {
+        if ([segue.destinationViewController isKindOfClass:[ScoreViewController class]]) {
+            ScoreViewController *ctrl = (ScoreViewController *)segue.destinationViewController;
+            ctrl.game = self.game;
+        }
+    }
 }
 
 #pragma mark - Internal Functions

@@ -11,26 +11,32 @@
 
 
 @interface ScoreViewController()
-
-@property (nonatomic, strong) NSArray *frames;
+@property (weak, nonatomic) IBOutlet UITextView *scoreboard;
 
 @end
 
 @implementation ScoreViewController
 
+- (void)setGame:(BowlingGame *)game {
+    _game = game;
+    if (self.view.window) {
+        [self updateUI];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self updateUI];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.frames = self.game.frames;
-    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-
+- (void)updateUI {
+    self.scoreboard.text = [self.game generateScoreboard];
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

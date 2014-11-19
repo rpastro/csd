@@ -59,13 +59,49 @@
                                     <action selector="quit:" destination="qQo-Ji-33W" eventType="touchUpInside" id="c9i-tu-7Ln"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xuv-DW-Kce">
+                                <rect key="frame" x="16" y="52" width="568" height="502"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scoreboard" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lSC-vn-q7I">
+                                <rect key="frame" x="249" y="20" width="103" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="wmS-Ac-3lb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="wmS-Ac-3lb"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="CDW-Ib-QwX" firstAttribute="leading" secondItem="Un4-Wn-O1x" secondAttribute="leading" constant="20" symbolic="YES" id="hLV-mI-54U"/>
-                            <constraint firstItem="R6R-Bx-Li9" firstAttribute="top" secondItem="CDW-Ib-QwX" secondAttribute="bottom" constant="8" symbolic="YES" id="yrV-Pb-zis"/>
+                            <constraint firstItem="Xuv-DW-Kce" firstAttribute="trailing" secondItem="Un4-Wn-O1x" secondAttribute="trailingMargin" id="0KV-Nb-o7T"/>
+                            <constraint firstItem="R6R-Bx-Li9" firstAttribute="top" secondItem="CDW-Ib-QwX" secondAttribute="bottom" constant="8" symbolic="YES" id="OmH-ND-MR3"/>
+                            <constraint firstItem="CDW-Ib-QwX" firstAttribute="leading" secondItem="Un4-Wn-O1x" secondAttribute="leadingMargin" constant="4" id="S18-hD-t0o"/>
+                            <constraint firstItem="lSC-vn-q7I" firstAttribute="top" secondItem="jwb-pe-Faf" secondAttribute="bottom" id="SPf-RS-gcN"/>
+                            <constraint firstItem="Xuv-DW-Kce" firstAttribute="top" secondItem="jwb-pe-Faf" secondAttribute="bottom" constant="8" symbolic="YES" id="UYB-gT-nEE"/>
+                            <constraint firstItem="CDW-Ib-QwX" firstAttribute="top" secondItem="Xuv-DW-Kce" secondAttribute="bottom" constant="8" symbolic="YES" id="b87-sv-cWx"/>
+                            <constraint firstItem="Xuv-DW-Kce" firstAttribute="leading" secondItem="Un4-Wn-O1x" secondAttribute="leadingMargin" id="eKd-Gx-Ra1"/>
+                            <constraint firstItem="Xuv-DW-Kce" firstAttribute="top" secondItem="lSC-vn-q7I" secondAttribute="bottom" constant="8" symbolic="YES" id="f72-9x-Kdk"/>
+                            <constraint firstItem="lSC-vn-q7I" firstAttribute="centerX" secondItem="Xuv-DW-Kce" secondAttribute="centerX" id="w5V-Sv-Ob7"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="UYB-gT-nEE"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="scoreboard" destination="Xuv-DW-Kce" id="Cnh-v5-t7g"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YD5-ff-IHZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
