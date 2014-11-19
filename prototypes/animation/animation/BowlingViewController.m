@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) BowlingGame *game;
 @property (weak, nonatomic) IBOutlet UIView *gameView;
+@property (weak, nonatomic) IBOutlet UIView *frictionArea;
 @property (weak, nonatomic) IBOutlet UILabel *frameNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *frameScoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalScoreLabel;
@@ -50,9 +51,9 @@ static const CGFloat LINE_OFFSET = 150.0;  // Distance from bottom to the foul l
 static const CGFloat BALL_OFFSET = 100.0;  // Distance from bottom to origin for starting ball position
 static const CGFloat BALL_WIDTH = 50.0;    // The bowling ball's width
 static const CGFloat PIN_WIDTH = 24.0;     // The bowling pin's width
-static const CGFloat PIN_DELTA_X = 28.0;   // The horizontal spacing between pins in the same row
-static const CGFloat PIN_DELTA_Y = 45.0;   // The vertical spacing between pins in adjacent rows
 static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to origin of pins
+static const CGFloat PIN_DELTA_X = 24.0;   // The horizontal spacing between pins in the same row
+static const CGFloat MINIMUM_PIN_MOVEMENT = 4.0; // The minimum number of points the PIN needs to be considered down
 
 #pragma mark - Properties
 
@@ -83,7 +84,7 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
     [super viewDidLoad];
 
     self.game = [[BowlingGame alloc] init];
-    [self setBottomLabels];
+    [self setBottomLabels:NO];
 
     self.scoreLabel.text = @"";
     self.scoreLabel.hidden = YES;
@@ -95,12 +96,12 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
     [self.animator addBehavior:self.collider];
 
     self.animationOptions = [[UIDynamicItemBehavior alloc] init];
-    self.animationOptions.density = 2.0;
+    self.animationOptions.density = 1.8; // Default density is 1.0
     // The dynamic item behavior is only added when the user rolls the ball
 
     __weak BowlingViewController *weakSelf = self;
     self.animationOptions.action = ^{
-        if (weakSelf.waitingToCheckScore || !self.rollingBallView) {
+        if (weakSelf.waitingToCheckScore || !weakSelf.rollingBallView) {
             return;
         }
         if (!CGRectIntersectsRect(weakSelf.gameView.bounds, weakSelf.rollingBallView.frame)) {
@@ -128,7 +129,6 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
 #pragma mark - Internal Functions
 
 - (void)computeScore {
-    NSLog(@"FUCK");
     [self removeRollingBall];
     self.waitingToCheckScore = NO;
 
@@ -138,8 +138,11 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
         if ([self.pinViews[idx] isKindOfClass:[BowlingPinView class]]) {
             BowlingPinView *pinView = (BowlingPinView *)self.pinViews[idx];
             CGRect pinFrame = [self.pinFrames[idx] CGRectValue];
-            CGRect actualFrame = pinView.frame;
-            dropped = !CGPointEqualToPoint(actualFrame.origin, pinFrame.origin);
+            CGRect expectedArea = CGRectMake(pinFrame.origin.x - MINIMUM_PIN_MOVEMENT,
+                                             pinFrame.origin.y - MINIMUM_PIN_MOVEMENT,
+                                             2 * MINIMUM_PIN_MOVEMENT,
+                                             2 * MINIMUM_PIN_MOVEMENT);
+            dropped = !CGRectContainsPoint(expectedArea, pinView.frame.origin);
             if (dropped) {
                 numDroppedPins++;
             }
@@ -147,21 +150,17 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
         [self.droppedPins addObject:[NSNumber numberWithBool:dropped]];
     }
 
-    self.scoreLabel.text = [NSString stringWithFormat:@"%lu", numDroppedPins];
-
-    BOOL moveToNextFrame = [self.game rollBall:numDroppedPins];
-    if (moveToNextFrame) {
+    BOOL resetPins = [self.game rollBall:numDroppedPins];
+    if (resetPins) {
         [self.droppedPins removeAllObjects];
-        BowlingFrame *lastFrame = [self.game getLastFrame];
-        if ([lastFrame isStrike]) {
-            self.scoreLabel.text = @"X";
-        } else if ([lastFrame isSpare]) {
-            self.scoreLabel.text = @"/";
-        }
-        self.frameScoreLabel.text = [self.game generateLastFrameScore];
-        self.totalScoreLabel.text = [NSString stringWithFormat:@"%lu", [self.game getScore]];
+    }
+    [self setBottomLabels:YES];
+
+    if (self.game.finished) {
+        self.scoreLabel.text = [NSString stringWithFormat:@"%lu", [self.game getScore]];
+        self.tapToContinueLabel.text = @"Tap to start new game";
     } else {
-        [self setBottomLabels];
+        self.scoreLabel.text = self.game.lastBallScore;
     }
     self.scoreLabel.hidden = NO;
     self.tapToContinueLabel.hidden = NO;
@@ -170,6 +169,9 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
 }
 
 - (void)determinePinsPlacement {
+    // Calculate the vertical spacing between pins in adjacent rows
+    CGFloat pinDeltaY = tan(M_PI / 3) * (PIN_WIDTH + PIN_DELTA_X) / 2;
+
     // The pins are positioned in the following sequence: 7, 8, 9, 10, 4, 5, 6, 2, 3, 1
     CGFloat middle = self.gameView.bounds.size.width / 2;
     CGPoint startingPoint = CGPointMake(middle - 2 * PIN_WIDTH - 1.5 * PIN_DELTA_X, PIN_OFFSET);
@@ -183,7 +185,7 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
         if (++count == pinsInRow) {
             // Move to the next row
             startingPoint.x += (PIN_WIDTH + PIN_DELTA_X) / 2;
-            startingPoint.y += PIN_DELTA_Y;
+            startingPoint.y += pinDeltaY;
             frame.origin.x = startingPoint.x;
             frame.origin.y = startingPoint.y;
             pinsInRow--;
@@ -199,8 +201,9 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
     if (self.game.finished) {
         // Create a new game
         self.game = [[BowlingGame alloc] init];
+        self.tapToContinueLabel.text = @"Tap to continue";
     }
-    [self setBottomLabels];
+    [self setBottomLabels:NO];
 
     // Create the idle ball
     CGRect ballFrame = CGRectMake((self.gameView.bounds.size.width - BALL_WIDTH) / 2,
@@ -218,9 +221,14 @@ static const CGFloat PIN_OFFSET = 20.0;    // Distance from top of screen to ori
     [self createPins];
 }
 
-- (void)setBottomLabels {
-    self.frameNumberLabel.text = [NSString stringWithFormat:@"Frame %lu", self.game.currentFrameNumber];
-    self.frameScoreLabel.text = [self.game generateCurrentFrameScore];
+- (void)setBottomLabels:(BOOL)useLastPlayedFrame {
+    if (useLastPlayedFrame) {
+        self.frameNumberLabel.text = [NSString stringWithFormat:@"Frame %lu", self.game.lastPlayedFrameNumber];
+        self.frameScoreLabel.text = [self.game generateLastPlayedFrameScore];
+    } else {
+        self.frameNumberLabel.text = [NSString stringWithFormat:@"Frame %lu", self.game.currentFrameNumber];
+        self.frameScoreLabel.text = [self.game generateCurrentFrameScore];
+    }
     self.totalScoreLabel.text = [NSString stringWithFormat:@"%lu", [self.game getScore]];
 }
 

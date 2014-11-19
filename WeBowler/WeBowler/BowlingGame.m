@@ -13,8 +13,10 @@
 
 @property (nonatomic, readwrite) BOOL finished;
 @property (nonatomic, readwrite) NSUInteger currentFrameNumber;
+@property (nonatomic, readwrite) NSUInteger lastPlayedFrameNumber;
 @property (nonatomic, readwrite) NSUInteger remainingPins;
-
+@property (nonatomic, strong, readwrite) NSString *lastBallScore;
+@property (nonatomic, strong, readwrite) NSArray *frames;
 
 @end
 
@@ -40,11 +42,14 @@ static const NSUInteger TOTAL_PINS = 10;
     if (self) {
         self.finished = NO;
         self.currentFrameNumber = 1;
+        self.lastPlayedFrameNumber = 1;
         self.remainingPins = TOTAL_PINS;
+        self.lastBallScore = @"";
     }
     return self;
 }
 
+// rollBall returns YES whenever the rack needs to be reset
 - (BOOL)rollBall:(NSUInteger)droppedPins {
     if (self.finished) {
         // The game is already finished.
@@ -62,6 +67,11 @@ static const NSUInteger TOTAL_PINS = 10;
         }
     }
 
+    self.lastPlayedFrameNumber = self.currentFrameNumber;
+    // By default set the lastBallScore to the number of dropped pins.
+    // This is overriden below in case of spares and strikes
+    self.lastBallScore = [NSString stringWithFormat:@"%lu", droppedPins];
+
     BowlingFrame *currFrame = (BowlingFrame *)self.frames[self.currentFrameNumber - 1];
 
     if (self.currentFrameNumber == NUM_FRAMES) {
@@ -69,8 +79,14 @@ static const NSUInteger TOTAL_PINS = 10;
         if (!currFrame.finished) {
             [currFrame dropPins:droppedPins];
             if (currFrame.finished && currFrame.pendingBonus) {
-                // First bonus ball
+                // Prepare for the first bonus ball
+                if ([currFrame isStrike]) {
+                    self.lastBallScore = @"X";
+                } else if ([currFrame isSpare]) {
+                    self.lastBallScore = @"/";
+                }
                 self.remainingPins = TOTAL_PINS;
+                return YES;
             } else {
                 self.remainingPins = currFrame.remainingPins;
             }
@@ -78,13 +94,15 @@ static const NSUInteger TOTAL_PINS = 10;
             // We just rolled the first bonus ball. Set the number of pins left for the second bonus ball.
             self.remainingPins = TOTAL_PINS - droppedPins;
             if (self.remainingPins == 0) {
+                self.lastBallScore = @"X";
                 self.remainingPins = TOTAL_PINS;
+                return YES;
             }
         }
         if (currFrame.finished && !currFrame.pendingBonus) {
             // End of game!
             self.finished = YES;
-            self.remainingPins = 0;
+            self.remainingPins = TOTAL_PINS;
             return YES;
         }
         return NO;
@@ -93,9 +111,13 @@ static const NSUInteger TOTAL_PINS = 10;
     // Handling for the other frans
     [currFrame dropPins:droppedPins];
     if (currFrame.finished) {
+        if ([currFrame isStrike]) {
+            self.lastBallScore = @"X";
+        } else if ([currFrame isSpare]) {
+            self.lastBallScore = @"/";
+        }
         self.currentFrameNumber++;
         self.remainingPins = TOTAL_PINS;
-
         return YES;
     }
     self.remainingPins = currFrame.remainingPins;
@@ -116,9 +138,8 @@ static const NSUInteger TOTAL_PINS = 10;
     return (BowlingFrame *)self.frames[self.currentFrameNumber - 1];
 }
 
-- (BowlingFrame *)getLastFrame {
-    NSUInteger lastFrameNumber = (self.currentFrameNumber == 1) ? 1 : self.currentFrameNumber - 1;
-    return (BowlingFrame *)self.frames[lastFrameNumber - 1];
+- (BowlingFrame *)getLastPlayedFrame {
+    return (BowlingFrame *)self.frames[self.lastPlayedFrameNumber - 1];
 }
 
 
@@ -143,9 +164,8 @@ static const NSUInteger TOTAL_PINS = 10;
     return [self generateFrameScore:self.currentFrameNumber];
 }
 
-- (NSString *)generateLastFrameScore {
-    NSUInteger lastFrameNumber = (self.currentFrameNumber == 1) ? 1 : self.currentFrameNumber - 1;
-    return [self generateFrameScore:lastFrameNumber];
+- (NSString *)generateLastPlayedFrameScore {
+    return [self generateFrameScore:self.lastPlayedFrameNumber];
 }
 
 - (NSString *)generateScoreboard {
