@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  BallView.h
 //  animation
 //
 //  Created by Unify Inc on 11/18/14.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BowlingViewController : UIViewController
-
+@interface BowlingBallView : UIView
 
 @end
-

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		96ED54DF1A1B684C0004F2B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54DE1A1B684C0004F2B6 /* main.m */; };
 		96ED54E21A1B684C0004F2B6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54E11A1B684C0004F2B6 /* AppDelegate.m */; };
-		96ED54E51A1B684C0004F2B6 /* BowlingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54E41A1B684C0004F2B6 /* BowlingViewController.m */; };
+		96ED54E51A1B684C0004F2B6 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96ED54E41A1B684C0004F2B6 /* GameViewController.m */; };
 		96ED54E81A1B684C0004F2B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96ED54E61A1B684C0004F2B6 /* Main.storyboard */; };
 		96ED54EA1A1B684C0004F2B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96ED54E91A1B684C0004F2B6 /* Images.xcassets */; };
 		96ED54ED1A1B684C0004F2B6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96ED54EB1A1B684C0004F2B6 /* LaunchScreen.xib */; };
@@ -36,8 +36,8 @@
 		96ED54DE1A1B684C0004F2B6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		96ED54E01A1B684C0004F2B6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		96ED54E11A1B684C0004F2B6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		96ED54E31A1B684C0004F2B6 /* BowlingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BowlingViewController.h; sourceTree = "<group>"; };
-		96ED54E41A1B684C0004F2B6 /* BowlingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BowlingViewController.m; sourceTree = "<group>"; };
+		96ED54E31A1B684C0004F2B6 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		96ED54E41A1B684C0004F2B6 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		96ED54E71A1B684C0004F2B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		96ED54E91A1B684C0004F2B6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		96ED54EC1A1B684C0004F2B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -103,8 +103,8 @@
 				96ED551A1A1C62FD0004F2B6 /* BowlingGame.m */,
 				96ED550E1A1C1B9E0004F2B6 /* BowlingPinView.h */,
 				96ED550F1A1C1B9E0004F2B6 /* BowlingPinView.m */,
-				96ED54E31A1B684C0004F2B6 /* BowlingViewController.h */,
-				96ED54E41A1B684C0004F2B6 /* BowlingViewController.m */,
+				96ED54E31A1B684C0004F2B6 /* GameViewController.h */,
+				96ED54E41A1B684C0004F2B6 /* GameViewController.m */,
 				96ED54E61A1B684C0004F2B6 /* Main.storyboard */,
 				96ED54E91A1B684C0004F2B6 /* Images.xcassets */,
 				96ED54EB1A1B684C0004F2B6 /* LaunchScreen.xib */,
@@ -239,7 +239,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96ED54E51A1B684C0004F2B6 /* BowlingViewController.m in Sources */,
+				96ED54E51A1B684C0004F2B6 /* GameViewController.m in Sources */,
 				96ED54E21A1B684C0004F2B6 /* AppDelegate.m in Sources */,
 				96ED551C1A1C62FD0004F2B6 /* BowlingGame.m in Sources */,
 				96ED551B1A1C62FD0004F2B6 /* BowlingFrame.m in Sources */,

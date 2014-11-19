@@ -6,17 +6,16 @@
 //  Copyright (c) 2014 Unify Inc. All rights reserved.
 //
 
-#import "BowlingViewController.h"
+#import "GameViewController.h"
 #import "BowlingBallView.h"
 #import "BowlingPinView.h"
 #import "BowlingGame.h"
 #import "BowlingFrame.h"
 
-@interface BowlingViewController ()
+@interface GameViewController ()
 
 @property (strong, nonatomic) BowlingGame *game;
 @property (weak, nonatomic) IBOutlet UIView *gameView;
-@property (weak, nonatomic) IBOutlet UIView *frictionArea;
 @property (weak, nonatomic) IBOutlet UILabel *frameNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *frameScoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalScoreLabel;
@@ -41,7 +40,7 @@
 
 @end
 
-@implementation BowlingViewController
+@implementation GameViewController
 
 static const int NUM_PINS = 10;
 
@@ -99,7 +98,7 @@ static const CGFloat MINIMUM_PIN_MOVEMENT = 4.0; // The minimum number of points
     self.animationOptions.density = 1.8; // Default density is 1.0
     // The dynamic item behavior is only added when the user rolls the ball
 
-    __weak BowlingViewController *weakSelf = self;
+    __weak GameViewController *weakSelf = self;
     self.animationOptions.action = ^{
         if (weakSelf.waitingToCheckScore || !weakSelf.rollingBallView) {
             return;
